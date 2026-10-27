@@ -1,0 +1,1 @@
+"Primary" means the primary programmer's datasets and outputs (tables `adsl`, `adtte`, `ard_dm_primary`). "QC" means the independent double-programmed versions (`qc_adsl`, `ard_dm_qc`). Answers support a human QC programmer and never constitute validation sign-off.

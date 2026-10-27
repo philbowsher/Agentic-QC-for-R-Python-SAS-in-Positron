@@ -1,0 +1,74 @@
+{
+  "image_path": "reference/KMPlot/ttde_legacy.png",
+  "plot_region": {
+    "left": 302,
+    "top": 127,
+    "right": 1154,
+    "bottom": 571
+  },
+  "x_range": [
+    0,
+    200
+  ],
+  "y_range": [
+    0,
+    100
+  ],
+  "x_label": "Days since first dose",
+  "y_label": "Event-free (%)",
+  "calibration_points": [
+    {
+      "month": 25,
+      "survival": 53.2,
+      "curve": 0
+    },
+    {
+      "month": 50,
+      "survival": 29.7,
+      "curve": 0
+    },
+    {
+      "month": 100,
+      "survival": 5.8,
+      "curve": 0
+    },
+    {
+      "month": 150,
+      "survival": 5.8,
+      "curve": 0
+    }
+  ],
+  "number_at_risk": {
+    "times": [
+      0,
+      25,
+      50,
+      75,
+      100,
+      125,
+      150,
+      175,
+      200
+    ],
+    "counts": {
+      "Xanomeline High Dose": [
+        72,
+        36,
+        19,
+        6,
+        3,
+        3,
+        3,
+        2,
+        0
+      ]
+    }
+  },
+  "curve_names": [
+    "Xanomeline High Dose"
+  ],
+  "output_path": "output/km_digitizer/ttde_legacy/km_digitized_high.json",
+  "debug_image": "output/km_digitizer/ttde_legacy/km_debug_high.png",
+  "y_tolerance": 1.0,
+  "extract_curve": 0
+}

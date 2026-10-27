@@ -1,0 +1,23 @@
+Type: Project
+Package: agenticqc.commons
+Title: Agentic QC assistant built with commons
+Version: 0.1.0
+Imports:
+    base64enc,
+    bsicons,
+    commons,
+    DBI,
+    diffdf,
+    dplyr,
+    ellmer,
+    gt,
+    htmltools,
+    magick,
+    metacore,
+    paws.common,
+    pointblank,
+    purrr,
+    rlang,
+    shiny,
+    shinychat,
+    tibble

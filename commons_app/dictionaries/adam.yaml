@@ -1,0 +1,90 @@
+name: adam
+description: >-
+  CDISC pilot 3 (Xanomeline transdermal patch in Alzheimer's disease) ADaM data
+  for the Agentic QC demonstration. Each analysis object exists twice: the
+  primary programmer's version and an independently double-programmed QC
+  version. One record per subject in ADSL; screen failures must be excluded
+  per the define.xml.
+tables:
+  - name: adsl
+    description: PRIMARY Subject-Level Analysis Dataset (derived with admiral from pharmaversesdtm).
+    details: >-
+      One record per subject expected. Variables follow the CDISC pilot 3 ADaM define.xml.
+    columns:
+      - name: USUBJID
+        type: string(id)
+        description: Unique subject identifier; key of the dataset.
+      - name: TRT01A
+        type: string
+        description: Actual treatment for period 01.
+        values: [Placebo, Xanomeline Low Dose, Xanomeline High Dose]
+      - name: SAFFL
+        type: string
+        description: Safety population flag. Y if randomized and TRTSDT not missing.
+        values: ["Y", "N"]
+      - name: ITTFL
+        type: string
+        description: Intent-to-treat population flag.
+        values: ["Y", "N"]
+      - name: AGE
+        type: number
+        description: Age in years.
+      - name: AGEGR1
+        type: string
+        description: Pooled age group 1 per define.xml (<65, 65-80, >80).
+        values: ["<65", "65-80", ">80"]
+      - name: TRTSDT
+        type: date
+        description: Date of first exposure to treatment.
+      - name: TRTEDT
+        type: date
+        description: Date of last exposure to treatment.
+  - name: qc_adsl
+    description: QC (independent double programming) version of ADSL, derived with dplyr directly from SDTM and the define.xml.
+    details: Same variables as adsl. Compare to adsl by USUBJID.
+    columns:
+      - name: USUBJID
+        type: string(id)
+        description: Unique subject identifier; key of the dataset.
+  - name: adtte
+    description: PRIMARY ADTTE, parameter TTDE (time to first treatment-emergent dermatologic event, days), safety population.
+    columns:
+      - name: USUBJID
+        type: string(id)
+        description: Unique subject identifier.
+      - name: AVAL
+        type: number
+        description: Days from first dose to event or censoring.
+      - name: CNSR
+        type: number
+        description: Censoring indicator, 0 = event, 1 = censored at end of treatment.
+        values: [0, 1]
+  - name: ard_dm_primary
+    description: PRIMARY Analysis Results Dataset for Table 14.1.2 Demographics (built with cards), one row per statistic.
+    details: >-
+      stat_name n/N/p for categorical variables (p is a proportion on the 0-1 scale);
+      N/mean/sd/median/p25/p75/min/max for AGE. p25/p75 use quantile type 2 (SAS PCTLDEF=5 equivalent).
+      Rows with variable = TRT01A and missing group1 are treatment big-N counts.
+    columns:
+      - name: group1_level
+        type: string
+        description: Treatment group.
+      - name: variable
+        type: string
+        description: Analysed variable (AGE, AGEGR1, SEX, RACE, TRT01A).
+      - name: variable_level
+        type: string
+        description: Category level for categorical variables; missing for AGE.
+      - name: stat_name
+        type: string
+        description: Statistic name.
+      - name: stat
+        type: number
+        description: Statistic value.
+  - name: ard_dm_qc
+    description: QC ARD for Table 14.1.2 Demographics, computed independently and stored at 3 decimal places (stands in for a cross-language hand-off such as a SAS dataset).
+    details: Same structure as ard_dm_primary. Compare on group1_level, variable, variable_level, stat_name.
+    columns:
+      - name: stat
+        type: number
+        description: Statistic value rounded to 3 decimals.
