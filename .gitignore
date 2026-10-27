@@ -24,3 +24,6 @@ logs/*.Rds
 /reference/KMPlot/
 /metadata/datadict/
 commons_app/.shinychat/
+
+# Local Posit Assistant settings
+.posit/assistant/settings.json
