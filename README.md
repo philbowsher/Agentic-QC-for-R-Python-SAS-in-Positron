@@ -2,6 +2,8 @@
 
 Code for the PHUSE 2026 paper *"Agentic QC" for R and Python in Positron* (ET14 & SM10), Phil Bowsher, Posit.
 
+**Slides:** https://pub.current.posit.team/public/Agentic_QC_R_Python_Positron/
+
 ## Contents
 
 - `.posit/assistant/skills/` – the `agentic-qc` skill written for the paper, plus community skills from [RConsortium/pharma-skills](https://github.com/RConsortium/pharma-skills) (km-digitizer, rounding, statistical-reviewer) and the skill shipped with [{commons}](https://posit-dev.github.io/commons/)
