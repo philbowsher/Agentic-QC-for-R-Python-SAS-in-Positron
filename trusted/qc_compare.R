@@ -180,6 +180,28 @@ qc_gt_ard_comparison <- function(cmp, show = c("review", "issues", "all"),
 #' @noRd
 qc_compare_datasets <- function(base, compare, keys = "USUBJID") {
   common <- intersect(names(base), names(compare))
+
+  # Structure checks (PROC COMPARE-style), done before attributes are stripped
+  type_of <- function(x) paste(class(x), collapse = "/")
+  label_of <- function(x) { l <- attr(x, "label"); if (is.null(l)) NA_character_ else as.character(l) }
+  str_cmp <- tibble::tibble(
+    VARIABLE = common,
+    type_base = vapply(base[common], type_of, ""),
+    type_compare = vapply(compare[common], type_of, ""),
+    label_base = vapply(base[common], label_of, ""),
+    label_compare = vapply(compare[common], label_of, "")
+  )
+  structure <- list(
+    n_obs = c(base = nrow(base), compare = nrow(compare)),
+    n_vars = c(base = ncol(base), compare = ncol(compare)),
+    vars_only_in_base = setdiff(names(base), names(compare)),
+    vars_only_in_compare = setdiff(names(compare), names(base)),
+    type_diffs = dplyr::filter(str_cmp, type_base != type_compare) |>
+      dplyr::select(VARIABLE, type_base, type_compare),
+    label_diffs = dplyr::filter(str_cmp, dplyr::coalesce(label_base, "") != dplyr::coalesce(label_compare, "")) |>
+      dplyr::select(VARIABLE, label_base, label_compare)
+  )
+
   base <- as.data.frame(base)[common]
   compare <- as.data.frame(compare)[common]
   # Strip attributes (labels/formats) so only values are compared
@@ -205,6 +227,7 @@ qc_compare_datasets <- function(base, compare, keys = "USUBJID") {
   }
   list(
     diffdf = dd,
+    structure = structure,
     summary = summary,
     rows = tibble::as_tibble(rows),
     extra_rows_base = if (!is.null(dd$ExtRowsBase)) nrow(dd$ExtRowsBase) else 0L,

@@ -84,5 +84,6 @@ capture.output(print(adsl_cmp$diffdf), file = "output/reports/adsl_diffdf.txt")
 
 message("Subjects only in primary: ", adsl_cmp$extra_rows_base,
         " | only in QC: ", adsl_cmp$extra_rows_compare)
+print(adsl_cmp$structure)   # obs/vars counts, missing variables, type & label differences
 print(adsl_cmp$summary)
 print(adsl_cmp$rows |> filter(VARIABLE %in% c("AGEGR1", "AGEGR1N")))
